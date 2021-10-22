@@ -284,6 +284,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		{
 			if (browserControl is System.Windows.Forms.Control control)
 			{
+
 				BrowserControlHost.Child = control;
 			}
 

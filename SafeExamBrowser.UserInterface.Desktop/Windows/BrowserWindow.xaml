@@ -101,6 +101,7 @@
                 <ProgressBar Grid.Row="1" x:Name="ProgressBar" Background="Transparent" BorderThickness="0" Foreground="DodgerBlue" Height="2" Margin="0,0,0,-1" />
             </Grid>
         </Border>
+      
         <WindowsFormsHost Grid.Row="1" x:Name="BrowserControlHost" />
         <Border x:Name="Findbar" Grid.Row="2" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="5,0" Visibility="Collapsed">
             <Grid>

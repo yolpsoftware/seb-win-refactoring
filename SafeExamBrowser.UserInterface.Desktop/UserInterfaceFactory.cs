@@ -82,6 +82,7 @@ namespace SafeExamBrowser.UserInterface.Desktop
 
 		public IBrowserWindow CreateBrowserWindow(IBrowserControl control, BrowserSettings settings, bool isMainWindow)
 		{
+
 			return Application.Current.Dispatcher.Invoke(() => new BrowserWindow(control, settings, isMainWindow, text));
 		}
 

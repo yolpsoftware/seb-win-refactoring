@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar"
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d" Title="Taskbar" Background="{DynamicResource BackgroundBrush}" Height="40" Width="750" WindowStyle="None" Topmost="True"
+        KeyDown="Window_KeyDown"
         ResizeMode="NoResize" Icon="../Images/SafeExamBrowser.ico">
     <Window.Resources>
         <ResourceDictionary>
@@ -30,5 +31,6 @@
         <StackPanel Grid.Column="2" x:Name="SystemControlStackPanel" Orientation="Horizontal" VerticalAlignment="Stretch" />
         <local:Clock Grid.Column="3" x:Name="Clock" Foreground="{StaticResource SecondaryTextBrush}" Padding="10,0,10,0" />
         <local:QuitButton Grid.Column="4" x:Name="QuitButton" />
+      
     </Grid>
 </Window>

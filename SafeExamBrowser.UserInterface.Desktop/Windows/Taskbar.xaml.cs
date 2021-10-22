@@ -159,5 +159,10 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			Loaded += (o, args) => InitializeBounds();
 			QuitButton.Clicked += QuitButton_Clicked;
 		}
+
+		private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+
+		}
 	}
 }

@@ -161,6 +161,7 @@ namespace SafeExamBrowser.Browser
 
 			InitializeRequestFilter(requestFilter);
 
+
 			control = new BrowserControl(
 				contextMenuHandler,
 				dialogHandler,
