@@ -265,6 +265,11 @@ namespace SafeExamBrowser.Client
 
 		private void ShowShell()
 		{
+			for (var i = 0; i < 10; i++)
+			{
+				System.Threading.Thread.Sleep(1000);
+			}
+
 			if (Settings.ActionCenter.EnableActionCenter)
 			{
 				actionCenter.Promote();

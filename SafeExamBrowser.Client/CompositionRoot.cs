@@ -97,7 +97,11 @@ namespace SafeExamBrowser.Client
 			powerSupply = new PowerSupply(ModuleLogger(nameof(PowerSupply)));
 			runtimeProxy = new RuntimeProxy(runtimeHostUri, new ProxyObjectFactory(), ModuleLogger(nameof(RuntimeProxy)), Interlocutor.Client);
 			systemInfo = new SystemInfo();
-			taskbar = uiFactory.CreateTaskbar(ModuleLogger("Taskbar"));
+			for (var i = 0; i < 10; i++)
+			{
+				System.Threading.Thread.Sleep(1000);
+			}
+			//taskbar = uiFactory.CreateTaskbar(ModuleLogger("Taskbar"));
 			taskview = uiFactory.CreateTaskview();
 			wirelessAdapter = new WirelessAdapter(ModuleLogger(nameof(WirelessAdapter)));
 
