@@ -151,5 +151,14 @@ namespace SafeExamBrowser.Browser
 		{
 			loadFailed?.Invoke((int) e.ErrorCode, e.ErrorText, e.FailedUrl);
 		}
+
+		/// <summary>
+		/// Executes the given Javascript code in the browser.
+		/// </summary>
+		public async void ExecuteJavascript(string javascript, System.Action<dynamic> callback)
+		{
+			var result = await this.EvaluateScriptAsync(javascript);
+			callback(result);
+		}
 	}
 }

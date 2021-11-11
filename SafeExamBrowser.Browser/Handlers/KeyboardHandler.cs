@@ -20,6 +20,7 @@ namespace SafeExamBrowser.Browser.Handlers
 		internal event ActionRequestedEventHandler ZoomInRequested;
 		internal event ActionRequestedEventHandler ZoomOutRequested;
 		internal event ActionRequestedEventHandler ZoomResetRequested;
+		internal event System.EventHandler<bool> TabPressed;
 
 		public bool OnKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
 		{
@@ -52,6 +53,11 @@ namespace SafeExamBrowser.Browser.Handlers
 				if (ctrl && (keyCode == (int) Keys.D0 || keyCode == (int) Keys.NumPad0))
 				{
 					ZoomResetRequested?.Invoke();
+				}
+
+				if (keyCode == (int) Keys.Tab)
+				{
+					TabPressed?.Invoke(this, shift);
 				}
 			}
 

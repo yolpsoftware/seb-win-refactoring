@@ -207,6 +207,18 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			{
 				ShowFindbar();
 			}
+
+			if (BrowserControlHost.IsFocused && e.Key == Key.Tab && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+			{
+				if (Findbar.Visibility == Visibility.Hidden || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+				{
+					Toolbar.Focus();
+				}
+				else if (Toolbar.Visibility == Visibility.Hidden)
+				{
+					Findbar.Focus();
+				}
+			}
 		}
 
 		private void BrowserWindow_Loaded(object sender, RoutedEventArgs e)
@@ -334,20 +346,20 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 		private void ApplySettings()
 		{
-			BackwardButton.IsEnabled = WindowSettings.AllowBackwardNavigation;
-			BackwardButton.Visibility = WindowSettings.AllowBackwardNavigation ? Visibility.Visible : Visibility.Collapsed;
+			BackwardButton.IsEnabled = true; // WindowSettings.AllowBackwardNavigation;
+			BackwardButton.Visibility = Visibility.Visible; // WindowSettings.AllowBackwardNavigation ? Visibility.Visible : Visibility.Collapsed;
 			DeveloperConsoleMenuItem.Visibility = WindowSettings.AllowDeveloperConsole ? Visibility.Visible : Visibility.Collapsed;
-			FindMenuItem.Visibility = settings.AllowFind ? Visibility.Visible : Visibility.Collapsed;
+			FindMenuItem.Visibility = Visibility.Visible; // settings.AllowFind ? Visibility.Visible : Visibility.Collapsed;
 			ForwardButton.IsEnabled = WindowSettings.AllowForwardNavigation;
-			ForwardButton.Visibility = WindowSettings.AllowForwardNavigation ? Visibility.Visible : Visibility.Collapsed;
+			ForwardButton.Visibility = Visibility.Visible; // WindowSettings.AllowForwardNavigation ? Visibility.Visible : Visibility.Collapsed;
 			HomeButton.IsEnabled = WindowSettings.ShowHomeButton;
-			HomeButton.Visibility = WindowSettings.ShowHomeButton ? Visibility.Visible : Visibility.Collapsed;
+			HomeButton.Visibility = Visibility.Visible; // WindowSettings.ShowHomeButton ? Visibility.Visible : Visibility.Collapsed;
 			MenuButton.IsEnabled = settings.AllowPageZoom || WindowSettings.AllowDeveloperConsole;
-			ReloadButton.IsEnabled = WindowSettings.AllowReloading;
-			ReloadButton.Visibility = WindowSettings.ShowReloadButton ? Visibility.Visible : Visibility.Collapsed;
-			Toolbar.Visibility = WindowSettings.ShowToolbar ? Visibility.Visible : Visibility.Collapsed;
-			UrlTextBox.Visibility = WindowSettings.AllowAddressBar ? Visibility.Visible : Visibility.Hidden;
-			ZoomMenuItem.Visibility = settings.AllowPageZoom ? Visibility.Visible : Visibility.Collapsed;
+			ReloadButton.IsEnabled = true; // WindowSettings.AllowReloading;
+			ReloadButton.Visibility = Visibility.Visible; // WindowSettings.ShowReloadButton ? Visibility.Visible : Visibility.Collapsed;
+			Toolbar.Visibility = Visibility.Visible; // WindowSettings.ShowToolbar ? Visibility.Visible : Visibility.Collapsed;
+			UrlTextBox.Visibility = Visibility.Visible; // WindowSettings.AllowAddressBar ? Visibility.Visible : Visibility.Hidden;
+			ZoomMenuItem.Visibility = Visibility.Visible; // settings.AllowPageZoom ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void InitializeBounds()
@@ -435,6 +447,36 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			FindCaseSensitiveCheckBox.Content = text.Get(TextKey.BrowserWindow_FindCaseSensitive);
 			FindMenuText.Text = text.Get(TextKey.BrowserWindow_FindMenuItem);
 			ZoomText.Text = text.Get(TextKey.BrowserWindow_ZoomMenuItem);
+		}
+
+		public void FocusToolbar()
+		{
+			this.Dispatcher.BeginInvoke((Action)(() =>
+			{
+				// focus all elements in the toolbar, such that the last element that is enabled gets focus
+				var buttons = new System.Windows.Controls.Control[] { MenuButton, UrlTextBox, ReloadButton, ForwardButton, BackwardButton };
+				for (var i = 0; i < buttons.Length; i++)
+				{
+					if (buttons[i].IsEnabled && buttons[i].Visibility == Visibility.Visible)
+					{
+						buttons[i].Focus();
+						break;
+					}
+				}
+			}));
+		}
+
+		public void FocusFindbar()
+		{
+			this.Dispatcher.BeginInvoke((Action)(() =>
+			{
+				// focus all elements in the find bar, in reverse order, such that the first element that is enabled gets focus
+				FindTextBox.Focus();
+				FindPreviousButton.Focus();
+				FindNextButton.Focus();
+				FindCaseSensitiveCheckBox.Focus();
+				FindbarCloseButton.Focus();
+			}));
 		}
 	}
 }

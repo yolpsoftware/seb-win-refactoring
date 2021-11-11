@@ -445,5 +445,15 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			FindMenuText.Text = text.Get(TextKey.BrowserWindow_FindMenuItem);
 			ZoomText.Text = text.Get(TextKey.BrowserWindow_ZoomMenuItem);
 		}
+
+		public void FocusToolbar()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void FocusFindbar()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

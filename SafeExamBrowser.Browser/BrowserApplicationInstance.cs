@@ -154,6 +154,7 @@ namespace SafeExamBrowser.Browser
 			keyboardHandler.ZoomInRequested += ZoomInRequested;
 			keyboardHandler.ZoomOutRequested += ZoomOutRequested;
 			keyboardHandler.ZoomResetRequested += ZoomResetRequested;
+			keyboardHandler.TabPressed += TabPressed;
 			lifeSpanHandler.PopupRequested += LifeSpanHandler_PopupRequested;
 			resourceHandler.SessionIdentifierDetected += (id) => SessionIdentifierDetected?.Invoke(id);
 			requestHandler.QuitUrlVisited += RequestHandler_QuitUrlVisited;
@@ -625,6 +626,30 @@ namespace SafeExamBrowser.Browser
 				window.UpdateZoomLevel(CalculateZoomPercentage());
 				logger.Debug($"Reset page zoom to {CalculateZoomPercentage()}%.");
 			}
+		}
+
+		private void TabPressed(object sender, bool shiftPressed)
+		{
+			//control.ExecuteJavascript("2", result =>
+			control.ExecuteJavascript("document.activeElement.tagName", result =>
+			{
+				var tagName = result.Result as string;
+				if (tagName != null)
+				{
+					if (tagName.ToUpper() == "BODY")
+					{
+						// this means the user is now at the start of the focus / tabIndex chain in the website
+						if (shiftPressed)
+						{
+							window.FocusToolbar();
+						}
+						else
+						{
+							//.FocusTaskbar();
+						}
+					}
+				}
+			});
 		}
 
 		private double CalculateZoomPercentage()

@@ -123,5 +123,9 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// Updates the display value of the current page zoom. Value is expected to be in percentage.
 		/// </summary>
 		void UpdateZoomLevel(double value);
+
+		void FocusToolbar();
+
+		void FocusFindbar();
 	}
 }
