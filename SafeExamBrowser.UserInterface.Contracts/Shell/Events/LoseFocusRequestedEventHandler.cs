@@ -6,10 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-namespace SafeExamBrowser.Browser.Contracts.Events
+using System.ComponentModel;
+
+namespace SafeExamBrowser.UserInterface.Contracts.Shell.Events
 {
 	/// <summary>
-	/// Event handler used to indicate that the user wants to focus the taskbar.
+	/// Event handler used to indicate that the current control/window wants to lose its focus.
 	/// </summary>
-	public delegate void FocusTaskbarRequestedEventHandler(bool forward);
+	public delegate void LoseFocusRequestedEventHandler(bool forward);
 }

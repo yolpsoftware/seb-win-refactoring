@@ -35,6 +35,11 @@ namespace SafeExamBrowser.Browser.Contracts
 		/// <summary>
 		/// Event fired when the user tries to focus the taskbar.
 		/// </summary>
-		event FocusTaskbarRequestedEventHandler FocusTaskbarRequested;
+		event FocusTaskbarRequestedEventHandler LoseFocusRequested;
+
+		/// <summary>
+		/// Transfers the focus to the browser window.
+		/// </summary>
+		void Focus(bool forward);
 	}
 }

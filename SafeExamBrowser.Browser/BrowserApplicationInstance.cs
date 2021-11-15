@@ -653,6 +653,18 @@ namespace SafeExamBrowser.Browser
 			});
 		}
 
+		internal void Focus(bool forward)
+		{
+			if (forward)
+			{
+				window.FocusToolbar();
+			}
+			else
+			{
+				window.FocusBrowser();
+			}
+		}
+
 		private double CalculateZoomPercentage()
 		{
 			return (zoomLevel * 25.0) + 100.0;

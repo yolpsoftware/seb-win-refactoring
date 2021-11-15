@@ -126,6 +126,6 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 
 		void FocusToolbar();
 
-		void FocusFindbar();
+		void FocusBrowser();
 	}
 }

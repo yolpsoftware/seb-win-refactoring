@@ -188,7 +188,7 @@ namespace SafeExamBrowser.Client
 			Browser.ConfigurationDownloadRequested += Browser_ConfigurationDownloadRequested;
 			Browser.SessionIdentifierDetected += Browser_SessionIdentifierDetected;
 			Browser.TerminationRequested += Browser_TerminationRequested;
-			Browser.FocusTaskbarRequested += Browser_FocusTaskbarRequested;
+			Browser.LoseFocusRequested += Browser_LoseFocusRequested; ;
 			ClientHost.ExamSelectionRequested += ClientHost_ExamSelectionRequested;
 			ClientHost.MessageBoxRequested += ClientHost_MessageBoxRequested;
 			ClientHost.PasswordRequested += ClientHost_PasswordRequested;
@@ -199,6 +199,7 @@ namespace SafeExamBrowser.Client
 			displayMonitor.DisplayChanged += DisplayMonitor_DisplaySettingsChanged;
 			runtime.ConnectionLost += Runtime_ConnectionLost;
 			systemMonitor.SessionSwitched += SystemMonitor_SessionSwitched;
+			taskbar.LoseFocusRequested += Taskbar_LoseFocusRequested;
 			taskbar.QuitButtonClicked += Shell_QuitButtonClicked;
 
 			foreach (var activator in context.Activators.OfType<ITerminationActivator>())
@@ -210,6 +211,16 @@ namespace SafeExamBrowser.Client
 			{
 				Server.TerminationRequested += Server_TerminationRequested;
 			}
+		}
+
+		private void Taskbar_LoseFocusRequested(bool forward)
+		{
+			this.Browser.Focus(forward);
+		}
+
+		private void Browser_LoseFocusRequested(bool forward)
+		{
+			this.taskbar.Focus(forward);
 		}
 
 		private void DeregisterEvents()
@@ -266,11 +277,6 @@ namespace SafeExamBrowser.Client
 
 		private void ShowShell()
 		{
-			for (var i = 0; i < 10; i++)
-			{
-				System.Threading.Thread.Sleep(1000);
-			}
-
 			if (Settings.ActionCenter.EnableActionCenter)
 			{
 				actionCenter.Promote();

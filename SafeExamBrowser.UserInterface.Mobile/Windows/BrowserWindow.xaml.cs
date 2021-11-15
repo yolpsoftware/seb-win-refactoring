@@ -451,7 +451,12 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			throw new NotImplementedException();
 		}
 
-		public void FocusFindbar()
+		public void FocusBrowser()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Debug()
 		{
 			throw new NotImplementedException();
 		}

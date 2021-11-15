@@ -69,6 +69,13 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 			InitializeComponent();
 			InitializeBrowserWindow(browserControl);
+
+			BrowserControlHost.GotFocus += BrowserControlHost_GotFocus;
+		}
+
+		private void BrowserControlHost_GotFocus(object sender, RoutedEventArgs e)
+		{
+			sender.ToString();
 		}
 
 		public void BringToForeground()
@@ -451,10 +458,13 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 		public void FocusToolbar()
 		{
-			this.Dispatcher.BeginInvoke((Action)(() =>
+			this.Dispatcher.BeginInvoke((Action)(async () =>
 			{
+				this.Activate();
+				await Task.Delay(200);
+
 				// focus all elements in the toolbar, such that the last element that is enabled gets focus
-				var buttons = new System.Windows.Controls.Control[] { MenuButton, UrlTextBox, ReloadButton, ForwardButton, BackwardButton };
+				var buttons = new System.Windows.Controls.Control[] { ForwardButton, BackwardButton, ReloadButton, UrlTextBox, MenuButton, };
 				for (var i = 0; i < buttons.Length; i++)
 				{
 					if (buttons[i].IsEnabled && buttons[i].Visibility == Visibility.Visible)
@@ -463,19 +473,45 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 						break;
 					}
 				}
+
+				await Task.Delay(200);
+
+				//var f1 = buttons[0].IsKeyboardFocusWithin;
+				//var f2 = buttons[0].IsFocused;
+				//buttons[0].LostFocus += BrowserWindow_LostFocus;
+				//var f3 = BrowserControlHost.IsKeyboardFocusWithin;
+				//var f4 = BrowserControlHost.IsFocused;
+				//var f5 = BrowserControlHost.IsFocused;
+				//var elem = FocusManager.GetFocusedElement(this);
+				//f2.ToString();
 			}));
 		}
 
-		public void FocusFindbar()
+		private void BrowserWindow_LostFocus(object sender, RoutedEventArgs e)
+		{
+		}
+
+		public void FocusBrowser()
 		{
 			this.Dispatcher.BeginInvoke((Action)(() =>
 			{
-				// focus all elements in the find bar, in reverse order, such that the first element that is enabled gets focus
-				FindTextBox.Focus();
-				FindPreviousButton.Focus();
-				FindNextButton.Focus();
-				FindCaseSensitiveCheckBox.Focus();
-				FindbarCloseButton.Focus();
+				this.Activate();
+				BrowserControlHost.Focus();
+			}));
+		}
+
+		public void Debug()
+		{
+			this.Dispatcher.BeginInvoke((Action)(() =>
+			{
+				var buttons = new System.Windows.Controls.Control[] { MenuButton, UrlTextBox, ReloadButton, ForwardButton, BackwardButton };
+				var f1 = buttons[0].IsKeyboardFocusWithin;
+				var f2 = buttons[0].IsFocused;
+				var f3 = BrowserControlHost.IsKeyboardFocusWithin;
+				var f4 = BrowserControlHost.IsFocused;
+				var f5 = BrowserControlHost.IsFocused;
+				var elem = FocusManager.GetFocusedElement(this);
+				f2.ToString();
 			}));
 		}
 	}

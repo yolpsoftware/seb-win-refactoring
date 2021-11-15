@@ -32,6 +32,11 @@ namespace SafeExamBrowser.UserInterface.Contracts.Shell
 		event QuitButtonClickedEventHandler QuitButtonClicked;
 
 		/// <summary>
+		/// Event fired when the Taskbar wants to lose focus.
+		/// </summary>
+		event LoseFocusRequestedEventHandler LoseFocusRequested;
+
+		/// <summary>
 		/// Adds the given application control to the taskbar.
 		/// </summary>
 		void AddApplicationControl(IApplicationControl control, bool atFirstPosition = false);
@@ -74,6 +79,6 @@ namespace SafeExamBrowser.UserInterface.Contracts.Shell
 		/// <summary>
 		/// Puts the focus on the taskbar.
 		/// </summary>
-		void Focus();
+		void Focus(bool forward = true);
 	}
 }

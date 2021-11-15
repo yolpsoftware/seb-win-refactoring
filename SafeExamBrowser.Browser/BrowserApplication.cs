@@ -57,8 +57,9 @@ namespace SafeExamBrowser.Browser
 		public string Tooltip { get; private set; }
 
 		public event DownloadRequestedEventHandler ConfigurationDownloadRequested;
+
 		public event SessionIdentifierDetectedEventHandler SessionIdentifierDetected;
-		public event FocusTaskbarRequestedEventHandler FocusTaskbarRequested;
+		public event FocusTaskbarRequestedEventHandler LoseFocusRequested;
 		public event TerminationRequestedEventHandler TerminationRequested;
 		public event WindowsChangedEventHandler WindowsChanged;
 
@@ -196,7 +197,7 @@ namespace SafeExamBrowser.Browser
 			instance.SessionIdentifierDetected += (i) => SessionIdentifierDetected?.Invoke(i);
 			instance.Terminated += Instance_Terminated;
 			instance.TerminationRequested += () => TerminationRequested?.Invoke();
-			instance.FocusTaskbarRequested += (fromAbove) => FocusTaskbarRequested?.Invoke(fromAbove);
+			instance.FocusTaskbarRequested += (forward) => LoseFocusRequested?.Invoke(forward);
 
 			instance.Initialize();
 			instances.Add(instance);
@@ -446,6 +447,14 @@ namespace SafeExamBrowser.Browser
 		{
 			instances.Remove(instances.First(i => i.Id == id));
 			WindowsChanged?.Invoke();
+		}
+
+		public void Focus(bool forward)
+		{
+			instances.ForEach(instance =>
+			{
+				instance.Focus(forward);
+			});
 		}
 	}
 }

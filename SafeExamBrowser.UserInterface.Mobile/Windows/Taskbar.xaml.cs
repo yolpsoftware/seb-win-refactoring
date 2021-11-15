@@ -31,6 +31,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			set { Dispatcher.Invoke(() => QuitButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed); }
 		}
 
+		public event LoseFocusRequestedEventHandler LoseFocusRequested;
 		public event QuitButtonClickedEventHandler QuitButtonClicked;
 
 		internal Taskbar(ILogger logger)
@@ -160,9 +161,17 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			QuitButton.Clicked += QuitButton_Clicked;
 		}
 
-		void ITaskbar.Focus()
+		void ITaskbar.Focus(bool fromTop)
 		{
-			base.Focus();
+			base.Activate();
+			if (fromTop)
+			{
+				this.ApplicationStackPanel.Children[0].Focus();
+			}
+			else
+			{
+				this.QuitButton.Focus();
+			}
 		}
 	}
 }
