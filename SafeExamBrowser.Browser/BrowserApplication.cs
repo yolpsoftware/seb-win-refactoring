@@ -58,6 +58,7 @@ namespace SafeExamBrowser.Browser
 
 		public event DownloadRequestedEventHandler ConfigurationDownloadRequested;
 		public event SessionIdentifierDetectedEventHandler SessionIdentifierDetected;
+		public event FocusTaskbarRequestedEventHandler FocusTaskbarRequested;
 		public event TerminationRequestedEventHandler TerminationRequested;
 		public event WindowsChangedEventHandler WindowsChanged;
 
@@ -195,6 +196,7 @@ namespace SafeExamBrowser.Browser
 			instance.SessionIdentifierDetected += (i) => SessionIdentifierDetected?.Invoke(i);
 			instance.Terminated += Instance_Terminated;
 			instance.TerminationRequested += () => TerminationRequested?.Invoke();
+			instance.FocusTaskbarRequested += (fromAbove) => FocusTaskbarRequested?.Invoke(fromAbove);
 
 			instance.Initialize();
 			instances.Add(instance);

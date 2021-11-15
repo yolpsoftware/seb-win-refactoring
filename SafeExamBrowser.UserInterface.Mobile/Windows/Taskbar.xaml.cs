@@ -159,5 +159,10 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			Loaded += (o, args) => InitializeBounds();
 			QuitButton.Clicked += QuitButton_Clicked;
 		}
+
+		void ITaskbar.Focus()
+		{
+			base.Focus();
+		}
 	}
 }

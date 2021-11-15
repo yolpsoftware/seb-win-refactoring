@@ -70,5 +70,10 @@ namespace SafeExamBrowser.UserInterface.Contracts.Shell
 		/// Shows the taskbar.
 		/// </summary>
 		void Show();
+
+		/// <summary>
+		/// Puts the focus on the taskbar.
+		/// </summary>
+		void Focus();
 	}
 }

@@ -827,7 +827,7 @@ namespace SebWindowsConfig
 				"CamPlay.exe",
 				"CamRecorder.exe",
 				"CamtasiaUtl.exe",
-				"slack.exe",
+				//"slack.exe",
 				"Element.exe",
 				"Zoom.exe",
 				"Telegram.exe",

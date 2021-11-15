@@ -188,6 +188,7 @@ namespace SafeExamBrowser.Client
 			Browser.ConfigurationDownloadRequested += Browser_ConfigurationDownloadRequested;
 			Browser.SessionIdentifierDetected += Browser_SessionIdentifierDetected;
 			Browser.TerminationRequested += Browser_TerminationRequested;
+			Browser.FocusTaskbarRequested += Browser_FocusTaskbarRequested;
 			ClientHost.ExamSelectionRequested += ClientHost_ExamSelectionRequested;
 			ClientHost.MessageBoxRequested += ClientHost_MessageBoxRequested;
 			ClientHost.PasswordRequested += ClientHost_PasswordRequested;

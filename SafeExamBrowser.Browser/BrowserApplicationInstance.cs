@@ -74,6 +74,7 @@ namespace SafeExamBrowser.Browser
 		internal event ResetRequestedEventHandler ResetRequested;
 		internal event SessionIdentifierDetectedEventHandler SessionIdentifierDetected;
 		internal event InstanceTerminatedEventHandler Terminated;
+		internal event FocusTaskbarRequestedEventHandler FocusTaskbarRequested;
 		internal event TerminationRequestedEventHandler TerminationRequested;
 
 		public event IconChangedEventHandler IconChanged;
@@ -645,7 +646,7 @@ namespace SafeExamBrowser.Browser
 						}
 						else
 						{
-							//.FocusTaskbar();
+							this.FocusTaskbarRequested?.Invoke(true);
 						}
 					}
 				}

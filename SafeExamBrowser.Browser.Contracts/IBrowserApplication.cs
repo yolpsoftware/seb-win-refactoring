@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+using System;
 using SafeExamBrowser.Applications.Contracts;
 using SafeExamBrowser.Browser.Contracts.Events;
 
@@ -30,5 +31,10 @@ namespace SafeExamBrowser.Browser.Contracts
 		/// Event fired when the browser application detects a request to terminate SEB.
 		/// </summary>
 		event TerminationRequestedEventHandler TerminationRequested;
+
+		/// <summary>
+		/// Event fired when the user tries to focus the taskbar.
+		/// </summary>
+		event FocusTaskbarRequestedEventHandler FocusTaskbarRequested;
 	}
 }

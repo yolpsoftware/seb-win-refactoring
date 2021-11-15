@@ -169,5 +169,10 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		{
 
 		}
+
+		void ITaskbar.Focus()
+		{
+			base.Focus();
+		}
 	}
 }
