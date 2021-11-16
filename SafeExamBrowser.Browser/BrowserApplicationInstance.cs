@@ -672,34 +672,8 @@ namespace SafeExamBrowser.Browser
 			else
 			{
 				window.FocusBrowser();
-				control.ExecuteJavascript("document.body.focus()", result =>
-				{
-					if (!result.Success)
-					{
-						System.Windows.Forms.MessageBox.Show(result.Message);
-					}
-				});
 
-				/*
-				 * trying to focus the last element on the page - first focus the body, then advance the focus in reverse order - this does not work so far
-				var javascript = @"bod = document.body;
-	bod.focus();
-setInterval(function () {
-	evnt = new Event('KeyboardEvent');
-	evnt.initEvent('keydown');
-	Object.defineProperties(evnt, {
-		keyCode: { value: 9 },
-		shiftKey: { value: true }
-	});
-	bod.dispatchEvent(evnt);
-}, 100)";
-				control.ExecuteJavascript(javascript, result =>
-				{
-					if (!result.Success)
-					{
-						System.Windows.Forms.MessageBox.Show(result.Message);
-					}
-				});*/
+				this.Activate();
 			}
 		}
 

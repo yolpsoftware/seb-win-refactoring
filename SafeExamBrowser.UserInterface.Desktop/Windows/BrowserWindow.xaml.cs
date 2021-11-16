@@ -35,6 +35,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		private BrowserSettings settings;
 		private IText text;
 		private WindowClosingEventHandler closing;
+		private bool browserControlGetsFocusFromTaskbar = false;
 
 		private WindowSettings WindowSettings
 		{
@@ -195,9 +196,9 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 		private void BrowserWindow_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Tab)
+			if (e.Key == Key.Tab && Toolbar.IsKeyboardFocusWithin)
 			{
-				if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && Toolbar.IsKeyboardFocusWithin)
+				if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
 				{
 					var firstActiveElementInToolbar = Toolbar.PredictFocus(FocusNavigationDirection.Right);
 					if (firstActiveElementInToolbar is System.Windows.UIElement)
@@ -210,6 +211,19 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 						}
 					}
 				}
+				/*else
+				{
+					var lastActiveElementInToolbar = Toolbar.PredictFocus(FocusNavigationDirection.Left);
+					if (lastActiveElementInToolbar is System.Windows.UIElement)
+					{
+						var control = lastActiveElementInToolbar as System.Windows.UIElement;
+						if (control.IsKeyboardFocusWithin)
+						{
+							this.LoseFocusRequested?.Invoke(false);
+							e.Handled = true;
+						}
+					}
+				}*/
 			}
 		}
 
@@ -368,6 +382,41 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			ZoomInButton.Click += (o, args) => ZoomInRequested?.Invoke();
 			ZoomOutButton.Click += (o, args) => ZoomOutRequested?.Invoke();
 			ZoomResetButton.Click += (o, args) => ZoomResetRequested?.Invoke();
+			BrowserControlHost.GotKeyboardFocus += BrowserControlHost_GotKeyboardFocus;
+		}
+
+		private void BrowserControlHost_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+		{
+			var forward = !this.browserControlGetsFocusFromTaskbar;
+
+			// focus the first / last element on the page
+			var javascript = @"
+if (typeof __SEB_focusElement === 'undefined') {
+  __SEB_focusElement = function (forward) {
+    var items = [].map
+      .call(document.body.querySelectorAll(['input', 'select', 'a[href]', 'textarea', 'button', '[tabindex]']), function(el, i) { return { el, i } })
+      .filter(function(e) { return e.el.tabIndex >= 0 && !e.el.disabled && e.el.offsetParent; })
+      .sort(function(a,b) { return a.el.tabIndex === b.el.tabIndex ? a.i - b.i : (a.el.tabIndex || 9E9) - (b.el.tabIndex || 9E9); })
+    var item = items[forward ? 1 : items.length - 1];
+    setTimeout(function () { item.focus(); }, 20);
+  }
+}";
+			var control = BrowserControlHost.Child as IBrowserControl;
+			control.ExecuteJavascript(javascript, result =>
+			{
+				if (!result.Success)
+				{
+					System.Windows.Forms.MessageBox.Show(result.Message);
+				}
+			});
+
+			control.ExecuteJavascript("__SEB_focusElement(" + forward.ToString().ToLower() + ")", result =>
+			{
+				if (!result.Success)
+				{
+					System.Windows.Forms.MessageBox.Show(result.Message);
+				}
+			});
 		}
 
 		private void ApplySettings()
@@ -497,10 +546,18 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 		public void FocusBrowser()
 		{
-			this.Dispatcher.BeginInvoke((Action)(() =>
+			this.Dispatcher.BeginInvoke((Action)(async () =>
 			{
-				this.Activate();
-				BrowserControlHost.Focus();
+				this.FocusToolbar(false);
+				await Task.Delay(100);
+
+				this.browserControlGetsFocusFromTaskbar = true;
+
+				var focusedElement = FocusManager.GetFocusedElement(this) as UIElement;
+				focusedElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+
+				await Task.Delay(150);
+				this.browserControlGetsFocusFromTaskbar = false;
 			}));
 		}
 	}
