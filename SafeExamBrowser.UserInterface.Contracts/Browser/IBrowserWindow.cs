@@ -10,6 +10,7 @@ using System;
 using SafeExamBrowser.Core.Contracts.Resources.Icons;
 using SafeExamBrowser.UserInterface.Contracts.Browser.Data;
 using SafeExamBrowser.UserInterface.Contracts.Browser.Events;
+using SafeExamBrowser.UserInterface.Contracts.Events;
 using SafeExamBrowser.UserInterface.Contracts.Windows;
 
 namespace SafeExamBrowser.UserInterface.Contracts.Browser
@@ -63,6 +64,11 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// Event fired when the user would like to navigate home.
 		/// </summary>
 		event ActionRequestedEventHandler HomeNavigationRequested;
+
+		/// <summary>
+		/// Event fired when the browser window wants to lose focus to the taskbar.
+		/// </summary>
+		event LoseFocusRequestedEventHandler LoseFocusRequested;
 
 		/// <summary>
 		/// Event fired when the user would like to reload the current page.

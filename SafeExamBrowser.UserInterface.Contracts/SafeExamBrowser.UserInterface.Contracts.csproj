@@ -63,6 +63,7 @@
     <Compile Include="Browser\IBrowserControl.cs" />
     <Compile Include="Browser\IBrowserWindow.cs" />
     <Compile Include="Events\ActionRequestedEventHandler.cs" />
+    <Compile Include="Events\LoseFocusRequestedEventHandler.cs" />
     <Compile Include="FileSystemDialog\FileSystemDialogResult.cs" />
     <Compile Include="FileSystemDialog\FileSystemElement.cs" />
     <Compile Include="FileSystemDialog\FileSystemOperation.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="MessageBox\MessageBoxResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\Events\ActivatorEventHandler.cs" />
-    <Compile Include="Shell\Events\LoseFocusRequestedEventHandler.cs" />
     <Compile Include="Shell\Events\QuitButtonClickedEventHandler.cs" />
     <Compile Include="Shell\IActionCenter.cs" />
     <Compile Include="Shell\IActionCenterActivator.cs" />

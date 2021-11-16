@@ -27,6 +27,7 @@ using SafeExamBrowser.Settings.Browser;
 using SafeExamBrowser.Settings.Browser.Proxy;
 using SafeExamBrowser.Settings.Logging;
 using SafeExamBrowser.UserInterface.Contracts;
+using SafeExamBrowser.UserInterface.Contracts.Events;
 using SafeExamBrowser.UserInterface.Contracts.FileSystemDialog;
 using SafeExamBrowser.UserInterface.Contracts.MessageBox;
 using SafeExamBrowser.WindowsApi.Contracts;
@@ -59,7 +60,7 @@ namespace SafeExamBrowser.Browser
 		public event DownloadRequestedEventHandler ConfigurationDownloadRequested;
 
 		public event SessionIdentifierDetectedEventHandler SessionIdentifierDetected;
-		public event FocusTaskbarRequestedEventHandler LoseFocusRequested;
+		public event LoseFocusRequestedEventHandler LoseFocusRequested;
 		public event TerminationRequestedEventHandler TerminationRequested;
 		public event WindowsChangedEventHandler WindowsChanged;
 
@@ -197,7 +198,7 @@ namespace SafeExamBrowser.Browser
 			instance.SessionIdentifierDetected += (i) => SessionIdentifierDetected?.Invoke(i);
 			instance.Terminated += Instance_Terminated;
 			instance.TerminationRequested += () => TerminationRequested?.Invoke();
-			instance.FocusTaskbarRequested += (forward) => LoseFocusRequested?.Invoke(forward);
+			instance.LoseFocusRequested += (forward) => LoseFocusRequested?.Invoke(forward);
 
 			instance.Initialize();
 			instances.Add(instance);

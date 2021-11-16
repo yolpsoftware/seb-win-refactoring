@@ -21,6 +21,7 @@ using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.Browser;
 using SafeExamBrowser.UserInterface.Contracts.Browser.Data;
 using SafeExamBrowser.UserInterface.Contracts.Browser.Events;
+using SafeExamBrowser.UserInterface.Contracts.Events;
 using SafeExamBrowser.UserInterface.Contracts.Windows;
 using SafeExamBrowser.UserInterface.Contracts.Windows.Events;
 using SafeExamBrowser.UserInterface.Desktop.Controls.Browser;
@@ -54,6 +55,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		public event ActionRequestedEventHandler ZoomInRequested;
 		public event ActionRequestedEventHandler ZoomOutRequested;
 		public event ActionRequestedEventHandler ZoomResetRequested;
+		public event LoseFocusRequestedEventHandler LoseFocusRequested;
 
 		event WindowClosingEventHandler IWindow.Closing
 		{
@@ -69,13 +71,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 			InitializeComponent();
 			InitializeBrowserWindow(browserControl);
-
-			BrowserControlHost.GotFocus += BrowserControlHost_GotFocus;
-		}
-
-		private void BrowserControlHost_GotFocus(object sender, RoutedEventArgs e)
-		{
-			sender.ToString();
 		}
 
 		public void BringToForeground()
@@ -198,6 +193,26 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			}
 		}
 
+		private void BrowserWindow_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Tab)
+			{
+				if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && Toolbar.IsKeyboardFocusWithin)
+				{
+					var firstActiveElementInToolbar = Toolbar.PredictFocus(FocusNavigationDirection.Right);
+					if (firstActiveElementInToolbar is System.Windows.UIElement)
+					{
+						var control = firstActiveElementInToolbar as System.Windows.UIElement;
+						if (control.IsKeyboardFocusWithin)
+						{
+							this.LoseFocusRequested?.Invoke(false);
+							e.Handled = true;
+						}
+					}
+				}
+			}
+		}
+
 		private void BrowserWindow_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.F5)
@@ -215,15 +230,18 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 				ShowFindbar();
 			}
 
-			if (BrowserControlHost.IsFocused && e.Key == Key.Tab && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+			if (e.Key == Key.Tab)
 			{
-				if (Findbar.Visibility == Visibility.Hidden || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+				if (BrowserControlHost.IsFocused && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
 				{
-					Toolbar.Focus();
-				}
-				else if (Toolbar.Visibility == Visibility.Hidden)
-				{
-					Findbar.Focus();
+					if (Findbar.Visibility == Visibility.Hidden || (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+					{
+						Toolbar.Focus();
+					}
+					else if (Toolbar.Visibility == Visibility.Hidden)
+					{
+						Findbar.Focus();
+					}
 				}
 			}
 		}
@@ -335,6 +353,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			MenuButton.MouseLeave += (o, args) => Task.Delay(250).ContinueWith(_ => Dispatcher.Invoke(() => MenuPopup.IsOpen = MenuPopup.IsMouseOver));
 			MenuPopup.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(Popup_PlacementCallback);
 			MenuPopup.MouseLeave += (o, args) => Task.Delay(250).ContinueWith(_ => Dispatcher.Invoke(() => MenuPopup.IsOpen = MenuPopup.IsMouseOver));
+			KeyDown += BrowserWindow_KeyDown;
 			KeyUp += BrowserWindow_KeyUp;
 			LocationChanged += (o, args) => { DownloadsPopup.IsOpen = false; MenuPopup.IsOpen = false; };
 			ReloadButton.Click += (o, args) => ReloadRequested?.Invoke();
@@ -474,10 +493,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 					}
 				}
 			}));
-		}
-
-		private void BrowserWindow_LostFocus(object sender, RoutedEventArgs e)
-		{
 		}
 
 		public void FocusBrowser()
