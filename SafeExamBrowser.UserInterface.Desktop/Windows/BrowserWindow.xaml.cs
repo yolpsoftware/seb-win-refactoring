@@ -456,7 +456,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			ZoomText.Text = text.Get(TextKey.BrowserWindow_ZoomMenuItem);
 		}
 
-		public void FocusToolbar()
+		public void FocusToolbar(bool forward)
 		{
 			this.Dispatcher.BeginInvoke((Action)(async () =>
 			{
@@ -465,7 +465,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 				// focus all elements in the toolbar, such that the last element that is enabled gets focus
 				var buttons = new System.Windows.Controls.Control[] { ForwardButton, BackwardButton, ReloadButton, UrlTextBox, MenuButton, };
-				for (var i = 0; i < buttons.Length; i++)
+				for (var i = forward ? 0 : buttons.Length - 1; i >= 0 && i < buttons.Length; i += forward ? 1 : -1)
 				{
 					if (buttons[i].IsEnabled && buttons[i].Visibility == Visibility.Visible)
 					{

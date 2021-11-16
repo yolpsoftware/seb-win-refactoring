@@ -446,7 +446,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			ZoomText.Text = text.Get(TextKey.BrowserWindow_ZoomMenuItem);
 		}
 
-		public void FocusToolbar()
+		public void FocusToolbar(bool forward)
 		{
 			throw new NotImplementedException();
 		}

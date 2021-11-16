@@ -124,7 +124,7 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// </summary>
 		void UpdateZoomLevel(double value);
 
-		void FocusToolbar();
+		void FocusToolbar(bool forward);
 
 		void FocusBrowser();
 	}

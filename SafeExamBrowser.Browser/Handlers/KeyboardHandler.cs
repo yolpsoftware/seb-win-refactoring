@@ -57,9 +57,16 @@ namespace SafeExamBrowser.Browser.Handlers
 					ZoomResetRequested?.Invoke();
 				}
 
-				if (keyCode == (int) Keys.Tab && keyCode == currentKeyDown)
+				if (keyCode == (int)Keys.Tab)
 				{
-					TabPressed?.Invoke(this, shift);
+					if (keyCode == currentKeyDown)
+					{
+						TabPressed?.Invoke(this, shift);
+					}
+					else
+					{
+						System.Diagnostics.Debug.WriteLine("tab pressed, but previous keydown was not tab");
+					}
 				}
 			}
 

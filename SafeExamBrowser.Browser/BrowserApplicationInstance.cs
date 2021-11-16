@@ -631,7 +631,7 @@ namespace SafeExamBrowser.Browser
 
 		private void TabPressed(object sender, bool shiftPressed)
 		{
-			System.Diagnostics.Debug.WriteLine("tabPressed");
+			System.Diagnostics.Debug.WriteLine("tabPressed" + (shiftPressed ? " shift" : ""));
 
 			control.ExecuteJavascript("document.activeElement.tagName", result =>
 			{
@@ -640,10 +640,12 @@ namespace SafeExamBrowser.Browser
 				{
 					if (tagName.ToUpper() == "BODY")
 					{
+						System.Diagnostics.Debug.WriteLine("tabPressed invokes focus change");
+
 						// this means the user is now at the start of the focus / tabIndex chain in the website
 						if (shiftPressed)
 						{
-							window.FocusToolbar();
+							window.FocusToolbar(!shiftPressed);
 						}
 						else
 						{
@@ -658,7 +660,7 @@ namespace SafeExamBrowser.Browser
 		{
 			if (forward)
 			{
-				window.FocusToolbar();
+				window.FocusToolbar(forward);
 			}
 			else
 			{
