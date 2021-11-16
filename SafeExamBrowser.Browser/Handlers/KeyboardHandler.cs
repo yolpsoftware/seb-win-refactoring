@@ -22,6 +22,8 @@ namespace SafeExamBrowser.Browser.Handlers
 		internal event ActionRequestedEventHandler ZoomResetRequested;
 		internal event System.EventHandler<bool> TabPressed;
 
+		private int? currentKeyDown = null;
+
 		public bool OnKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
 		{
 			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
@@ -55,22 +57,32 @@ namespace SafeExamBrowser.Browser.Handlers
 					ZoomResetRequested?.Invoke();
 				}
 
-				if (keyCode == (int) Keys.Tab)
+				if (keyCode == (int) Keys.Tab && keyCode == currentKeyDown)
 				{
 					TabPressed?.Invoke(this, shift);
 				}
 			}
 
+			currentKeyDown = null;
 			return false;
 		}
 
 		public bool OnPreKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey, ref bool isKeyboardShortcut)
 		{
+			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
+			var shift = modifiers.HasFlag(CefEventFlags.ShiftDown);
+			System.Diagnostics.Debug.WriteLine($"pre-key event {ctrl} {shift} {type} {keyCode} {nativeKeyCode}");
+
 			if (type == KeyType.KeyUp && keyCode == (int) Keys.F5)
 			{
 				ReloadRequested?.Invoke();
 
 				return true;
+			}
+
+			if (type == KeyType.RawKeyDown || type == KeyType.KeyDown)
+			{
+				currentKeyDown = keyCode;
 			}
 
 			return false;

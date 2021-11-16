@@ -461,7 +461,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			this.Dispatcher.BeginInvoke((Action)(async () =>
 			{
 				this.Activate();
-				await Task.Delay(200);
+				await Task.Delay(50);
 
 				// focus all elements in the toolbar, such that the last element that is enabled gets focus
 				var buttons = new System.Windows.Controls.Control[] { ForwardButton, BackwardButton, ReloadButton, UrlTextBox, MenuButton, };
@@ -473,17 +473,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 						break;
 					}
 				}
-
-				await Task.Delay(200);
-
-				//var f1 = buttons[0].IsKeyboardFocusWithin;
-				//var f2 = buttons[0].IsFocused;
-				//buttons[0].LostFocus += BrowserWindow_LostFocus;
-				//var f3 = BrowserControlHost.IsKeyboardFocusWithin;
-				//var f4 = BrowserControlHost.IsFocused;
-				//var f5 = BrowserControlHost.IsFocused;
-				//var elem = FocusManager.GetFocusedElement(this);
-				//f2.ToString();
 			}));
 		}
 
@@ -497,21 +486,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			{
 				this.Activate();
 				BrowserControlHost.Focus();
-			}));
-		}
-
-		public void Debug()
-		{
-			this.Dispatcher.BeginInvoke((Action)(() =>
-			{
-				var buttons = new System.Windows.Controls.Control[] { MenuButton, UrlTextBox, ReloadButton, ForwardButton, BackwardButton };
-				var f1 = buttons[0].IsKeyboardFocusWithin;
-				var f2 = buttons[0].IsFocused;
-				var f3 = BrowserControlHost.IsKeyboardFocusWithin;
-				var f4 = BrowserControlHost.IsFocused;
-				var f5 = BrowserControlHost.IsFocused;
-				var elem = FocusManager.GetFocusedElement(this);
-				f2.ToString();
 			}));
 		}
 	}

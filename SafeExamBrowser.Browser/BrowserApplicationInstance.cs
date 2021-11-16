@@ -631,7 +631,8 @@ namespace SafeExamBrowser.Browser
 
 		private void TabPressed(object sender, bool shiftPressed)
 		{
-			//control.ExecuteJavascript("2", result =>
+			System.Diagnostics.Debug.WriteLine("tabPressed");
+
 			control.ExecuteJavascript("document.activeElement.tagName", result =>
 			{
 				var tagName = result.Result as string;
