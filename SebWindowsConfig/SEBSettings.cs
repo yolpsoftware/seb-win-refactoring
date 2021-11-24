@@ -804,7 +804,7 @@ namespace SebWindowsConfig
 			};
 			SEBSettings.prohibitedProcessesDefaultStrict = new List<string>
 			{
-				"Skype.exe",
+				//"Skype.exe",
 				"SkypeApp.exe",
 				"SkypeHost.exe",
 				"g2mcomm.exe",
@@ -827,7 +827,7 @@ namespace SebWindowsConfig
 				"CamPlay.exe",
 				"CamRecorder.exe",
 				"CamtasiaUtl.exe",
-				"slack.exe",
+				//"slack.exe",
 				"Element.exe",
 				"Zoom.exe",
 				"Telegram.exe",
