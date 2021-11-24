@@ -27,6 +27,7 @@ using SafeExamBrowser.Settings.Browser.Filter;
 using SafeExamBrowser.UserInterface.Contracts;
 using SafeExamBrowser.UserInterface.Contracts.Browser;
 using SafeExamBrowser.UserInterface.Contracts.Browser.Data;
+using SafeExamBrowser.UserInterface.Contracts.Events;
 using SafeExamBrowser.UserInterface.Contracts.FileSystemDialog;
 using SafeExamBrowser.UserInterface.Contracts.MessageBox;
 using Syroot.Windows.IO;
@@ -74,6 +75,7 @@ namespace SafeExamBrowser.Browser
 		internal event ResetRequestedEventHandler ResetRequested;
 		internal event SessionIdentifierDetectedEventHandler SessionIdentifierDetected;
 		internal event InstanceTerminatedEventHandler Terminated;
+		internal event LoseFocusRequestedEventHandler LoseFocusRequested;
 		internal event TerminationRequestedEventHandler TerminationRequested;
 
 		public event IconChangedEventHandler IconChanged;
@@ -154,6 +156,7 @@ namespace SafeExamBrowser.Browser
 			keyboardHandler.ZoomInRequested += ZoomInRequested;
 			keyboardHandler.ZoomOutRequested += ZoomOutRequested;
 			keyboardHandler.ZoomResetRequested += ZoomResetRequested;
+			keyboardHandler.TabPressed += TabPressed;
 			lifeSpanHandler.PopupRequested += LifeSpanHandler_PopupRequested;
 			resourceHandler.SessionIdentifierDetected += (id) => SessionIdentifierDetected?.Invoke(id);
 			requestHandler.QuitUrlVisited += RequestHandler_QuitUrlVisited;
@@ -218,6 +221,7 @@ namespace SafeExamBrowser.Browser
 			window.FindRequested += Window_FindRequested;
 			window.ForwardNavigationRequested += Window_ForwardNavigationRequested;
 			window.HomeNavigationRequested += HomeNavigationRequested;
+			window.LoseFocusRequested += Window_LoseFocusRequested;
 			window.ReloadRequested += ReloadRequested;
 			window.ZoomInRequested += ZoomInRequested;
 			window.ZoomOutRequested += ZoomOutRequested;
@@ -593,6 +597,11 @@ namespace SafeExamBrowser.Browser
 			control.NavigateForwards();
 		}
 
+		private void Window_LoseFocusRequested(bool forward)
+		{
+			LoseFocusRequested?.Invoke(forward);
+		}
+
 		private void ZoomInRequested()
 		{
 			if (settings.AllowPageZoom && CalculateZoomPercentage() < 300)
@@ -623,6 +632,47 @@ namespace SafeExamBrowser.Browser
 				control.Zoom(0);
 				window.UpdateZoomLevel(CalculateZoomPercentage());
 				logger.Debug($"Reset page zoom to {CalculateZoomPercentage()}%.");
+			}
+		}
+
+		private void TabPressed(object sender, bool shiftPressed)
+		{
+			System.Diagnostics.Debug.WriteLine("tabPressed" + (shiftPressed ? " shift" : ""));
+
+			control.ExecuteJavascript("document.activeElement.tagName", result =>
+			{
+				var tagName = result.Result as string;
+				if (tagName != null)
+				{
+					if (tagName.ToUpper() == "BODY")
+					{
+						System.Diagnostics.Debug.WriteLine("tabPressed invokes focus change");
+
+						// this means the user is now at the start of the focus / tabIndex chain in the website
+						if (shiftPressed)
+						{
+							window.FocusToolbar(!shiftPressed);
+						}
+						else
+						{
+							this.LoseFocusRequested?.Invoke(true);
+						}
+					}
+				}
+			});
+		}
+
+		internal void Focus(bool forward)
+		{
+			if (forward)
+			{
+				window.FocusToolbar(forward);
+			}
+			else
+			{
+				window.FocusBrowser();
+
+				this.Activate();
 			}
 		}
 
