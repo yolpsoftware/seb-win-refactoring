@@ -226,7 +226,7 @@ namespace SafeExamBrowser.Client.Operations
 
 		private void InitializeAudioForActionCenter()
 		{
-			if (Context.Settings.ActionCenter.ShowAudio)
+			if (true) //Context.Settings.ActionCenter.ShowAudio)
 			{
 				actionCenter.AddSystemControl(uiFactory.CreateAudioControl(audio, Location.ActionCenter));
 			}
@@ -234,7 +234,8 @@ namespace SafeExamBrowser.Client.Operations
 
 		private void InitializeAudioForTaskbar()
 		{
-			if (Context.Settings.Taskbar.ShowAudio)
+			//System.Threading.Thread.Sleep(10000);
+			if (true) //Context.Settings.Taskbar.ShowAudio)
 			{
 				taskbar.AddSystemControl(uiFactory.CreateAudioControl(audio, Location.Taskbar));
 			}

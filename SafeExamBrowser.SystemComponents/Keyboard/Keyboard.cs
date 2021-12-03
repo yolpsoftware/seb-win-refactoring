@@ -65,6 +65,14 @@ namespace SafeExamBrowser.SystemComponents.Keyboard
 				logger.Info($"Detected keyboard layout {ToString(info)}.");
 			}
 
+			layouts.Add(new KeyboardLayout()
+			{
+				CultureCode = "DEU",
+				CultureInfo = new CultureInfo("de-ch"),
+				IsCurrent = false,
+				Name = "Deutsch"
+			});
+
 			InputLanguageManager.Current.InputLanguageChanged += Current_InputLanguageChanged;
 		}
 
