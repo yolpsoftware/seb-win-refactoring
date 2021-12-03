@@ -13,18 +13,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Button x:Name="Button" Background="Transparent" Height="40" Padding="10,0" Template="{StaticResource TaskbarButton}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="IsCurrentTextBlock" Grid.Column="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">•</TextBlock>
-                <TextBlock x:Name="CultureCodeTextBlock" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,5,0" VerticalAlignment="Center" />
-                <TextBlock x:Name="LayoutNameTextBlock" Grid.Column="2" Foreground="Gray" HorizontalAlignment="Left" Margin="5,0,10,0" VerticalAlignment="Center" />
-            </Grid>
-        </Button>
-    </Grid>
+    <Button x:Name="Button" Background="Transparent" Height="40" Padding="10,0" Template="{StaticResource TaskbarButton}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="IsCurrentTextBlock" Grid.Column="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">•</TextBlock>
+            <TextBlock x:Name="CultureCodeTextBlock" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,5,0" VerticalAlignment="Center" />
+            <TextBlock x:Name="LayoutNameTextBlock" Grid.Column="2" Foreground="Gray" HorizontalAlignment="Left" Margin="5,0,10,0" VerticalAlignment="Center" />
+        </Grid>
+    </Button>
 </UserControl>
