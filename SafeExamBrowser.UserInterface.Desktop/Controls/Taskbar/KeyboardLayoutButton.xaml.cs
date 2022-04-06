@@ -42,6 +42,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 			Button.Click += (o, args) => LayoutSelected?.Invoke(this, EventArgs.Empty);
 			CultureCodeTextBlock.Text = layout.CultureCode;
 			LayoutNameTextBlock.Text = layout.Name;
+			System.Windows.Automation.AutomationProperties.SetHelpText(Button, layout.Name);
 		}
 	}
 }
