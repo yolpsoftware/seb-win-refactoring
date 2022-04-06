@@ -130,15 +130,6 @@ git -C $(SolutionDir) checkout -- Setup/Components/Service.wxs</PostBuildEvent>
 	</Target>
 	-->
   <PropertyGroup>
-    <SignOutput>true</SignOutput>
-  </PropertyGroup>
-  <Target Name="SignCabs">
-    <Exec Command="signtool sign /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;%(SignCabs.FullPath)&quot;" />
-  </Target>
-  <Target Name="SignMsi">
-    <Exec Command="signtool sign /sm /tr http://timestamp.digicert.com /td sha256 /fd sha256 /d &quot;Safe Exam Browser&quot; &quot;%(SignMsi.FullPath)&quot;" />
-  </Target>
-  <PropertyGroup>
     <PreBuildEvent>setlocal enabledelayedexpansion
 
 set binaries=
