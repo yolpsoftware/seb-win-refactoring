@@ -20,6 +20,7 @@ namespace SafeExamBrowser.Browser.Handlers
 		internal event ActionRequestedEventHandler ZoomInRequested;
 		internal event ActionRequestedEventHandler ZoomOutRequested;
 		internal event ActionRequestedEventHandler ZoomResetRequested;
+		internal event ActionRequestedEventHandler FocusTaskbarRequested;
 		internal event ActionRequestedEventHandler FocusAddressBarRequested;
 		internal event System.EventHandler<bool> TabPressed;
 
@@ -63,7 +64,12 @@ namespace SafeExamBrowser.Browser.Handlers
 					ZoomResetRequested?.Invoke();
 				}
 
-				if (keyCode == (int)Keys.Tab)
+				if (type == KeyType.KeyUp && keyCode == (int) Keys.LWin)
+				{
+					FocusTaskbarRequested?.Invoke();
+				}
+
+				if (keyCode == (int) Keys.Tab)
 				{
 					if (keyCode == currentKeyDown)
 					{

@@ -45,7 +45,7 @@ namespace SafeExamBrowser.SystemComponents
 		{
 			var status = SystemInformation.PowerStatus.BatteryChargeStatus;
 
-			HasBattery = !status.HasFlag(BatteryChargeStatus.NoSystemBattery) && !status.HasFlag(BatteryChargeStatus.Unknown);
+			HasBattery = true || !status.HasFlag(BatteryChargeStatus.NoSystemBattery) && !status.HasFlag(BatteryChargeStatus.Unknown);
 		}
 
 		private void InitializeMachineInfo()

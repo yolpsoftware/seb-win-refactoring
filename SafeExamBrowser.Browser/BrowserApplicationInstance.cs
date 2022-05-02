@@ -157,6 +157,7 @@ namespace SafeExamBrowser.Browser
 			keyboardHandler.ZoomOutRequested += ZoomOutRequested;
 			keyboardHandler.ZoomResetRequested += ZoomResetRequested;
 			keyboardHandler.TabPressed += TabPressed;
+			keyboardHandler.FocusTaskbarRequested += FocusTaskbarRequested;
 			keyboardHandler.FocusAddressBarRequested += FocusAddressBarRequested;
 			lifeSpanHandler.PopupRequested += LifeSpanHandler_PopupRequested;
 			resourceHandler.SessionIdentifierDetected += (id) => SessionIdentifierDetected?.Invoke(id);
@@ -441,6 +442,11 @@ namespace SafeExamBrowser.Browser
 		private void FocusAddressBarRequested()
 		{
 			window.FocusAddressBar();
+		}
+
+		private void FocusTaskbarRequested()
+		{
+			this.LoseFocusRequested?.Invoke(true);
 		}
 
 		private void LifeSpanHandler_PopupRequested(PopupRequestedEventArgs args)
