@@ -408,7 +408,6 @@ if (typeof __SEB_focusElement === 'undefined') {
 			{
 				if (!result.Success)
 				{
-					System.Windows.Forms.MessageBox.Show(result.Message);
 				}
 			});
 
@@ -416,7 +415,6 @@ if (typeof __SEB_focusElement === 'undefined') {
 			{
 				if (!result.Success)
 				{
-					System.Windows.Forms.MessageBox.Show(result.Message);
 				}
 			});
 		}
