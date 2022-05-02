@@ -647,7 +647,7 @@ namespace SafeExamBrowser.Browser
 			}
 		}
 
-		private void TabPressed(object sender, bool shiftPressed)
+		private void TabPressed(bool shiftPressed)
 		{
 			System.Diagnostics.Debug.WriteLine("tabPressed" + (shiftPressed ? " shift" : ""));
 
