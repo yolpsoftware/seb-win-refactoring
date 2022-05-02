@@ -467,5 +467,10 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 		{
 			throw new NotImplementedException();
 		}
+
+		public void FocusAddressBar()
+		{
+			this.UrlTextBox.Focus();
+		}
 	}
 }

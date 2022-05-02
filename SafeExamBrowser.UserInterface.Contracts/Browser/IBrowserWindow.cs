@@ -133,5 +133,7 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		void FocusToolbar(bool forward);
 
 		void FocusBrowser();
+
+		void FocusAddressBar();
 	}
 }
