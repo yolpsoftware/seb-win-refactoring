@@ -804,7 +804,7 @@ namespace SebWindowsConfig
 			};
 			SEBSettings.prohibitedProcessesDefaultStrict = new List<string>
 			{
-				"Skype.exe",
+				//"Skype.exe",
 				"SkypeApp.exe",
 				"SkypeHost.exe",
 				"g2mcomm.exe",

@@ -131,7 +131,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RemotePCDesktop.exe", OriginalName = "RemotePCDesktop.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RPCService.exe", OriginalName = "RPCService.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "RPCSuite.exe", OriginalName = "RPCSuite.exe" });
-			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "Skype.exe", OriginalName = "Skype.exe" });
+			//settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "Skype.exe", OriginalName = "Skype.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "SkypeApp.exe", OriginalName = "SkypeApp.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "SkypeHost.exe", OriginalName = "SkypeHost.exe" });
 			settings.Applications.Blacklist.Add(new BlacklistApplication { ExecutableName = "slack.exe", OriginalName = "slack.exe" });
@@ -191,7 +191,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 
 			settings.ConfigurationMode = ConfigurationMode.Exam;
 
-			settings.Display.AllowedDisplays = 1;
+			settings.Display.AllowedDisplays = 2;
 			settings.Display.IgnoreError = false;
 			settings.Display.InternalDisplayOnly = false;
 
@@ -253,7 +253,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Security.AllowApplicationLogAccess = false;
 			settings.Security.AllowTermination = true;
 			settings.Security.AllowReconfiguration = false;
-			settings.Security.KioskMode = KioskMode.CreateNewDesktop;
+			settings.Security.KioskMode = KioskMode.None;
 			settings.Security.VirtualMachinePolicy = VirtualMachinePolicy.Deny;
 
 			settings.Server.PingInterval = 1000;

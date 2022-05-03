@@ -31,6 +31,7 @@ namespace SafeExamBrowser.Browser.Handlers
 			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
 			var shift = modifiers.HasFlag(CefEventFlags.ShiftDown);
 
+			System.Diagnostics.Debug.WriteLine($"key event {ctrl} {shift} {type} {keyCode} {nativeKeyCode}");
 			if (type == KeyType.KeyUp)
 			{
 				if (ctrl && keyCode == (int) Keys.F)

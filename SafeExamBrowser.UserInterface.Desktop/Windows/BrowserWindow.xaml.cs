@@ -486,20 +486,20 @@ if (typeof __SEB_focusElement === 'undefined') {
 
 		private void ApplySettings()
 		{
-			BackwardButton.IsEnabled = WindowSettings.AllowBackwardNavigation;
-			BackwardButton.Visibility = WindowSettings.AllowBackwardNavigation ? Visibility.Visible : Visibility.Collapsed;
+			BackwardButton.IsEnabled = true; // WindowSettings.AllowBackwardNavigation;
+			BackwardButton.Visibility = Visibility.Visible; // WindowSettings.AllowBackwardNavigation ? Visibility.Visible : Visibility.Collapsed;
 			DeveloperConsoleMenuItem.Visibility = WindowSettings.AllowDeveloperConsole ? Visibility.Visible : Visibility.Collapsed;
-			FindMenuItem.Visibility = settings.AllowFind ? Visibility.Visible : Visibility.Collapsed;
+			FindMenuItem.Visibility = Visibility.Visible; // settings.AllowFind ? Visibility.Visible : Visibility.Collapsed;
 			ForwardButton.IsEnabled = WindowSettings.AllowForwardNavigation;
-			ForwardButton.Visibility = WindowSettings.AllowForwardNavigation ? Visibility.Visible : Visibility.Collapsed;
+			ForwardButton.Visibility = Visibility.Visible; // WindowSettings.AllowForwardNavigation ? Visibility.Visible : Visibility.Collapsed;
 			HomeButton.IsEnabled = WindowSettings.ShowHomeButton;
-			HomeButton.Visibility = WindowSettings.ShowHomeButton ? Visibility.Visible : Visibility.Collapsed;
+			HomeButton.Visibility = Visibility.Visible; // WindowSettings.ShowHomeButton ? Visibility.Visible : Visibility.Collapsed;
 			MenuButton.IsEnabled = settings.AllowPageZoom || WindowSettings.AllowDeveloperConsole;
-			ReloadButton.IsEnabled = WindowSettings.AllowReloading;
-			ReloadButton.Visibility = WindowSettings.ShowReloadButton ? Visibility.Visible : Visibility.Collapsed;
-			Toolbar.Visibility = WindowSettings.ShowToolbar ? Visibility.Visible : Visibility.Collapsed;
-			UrlTextBox.Visibility = WindowSettings.AllowAddressBar ? Visibility.Visible : Visibility.Hidden;
-			ZoomMenuItem.Visibility = settings.AllowPageZoom ? Visibility.Visible : Visibility.Collapsed;
+			ReloadButton.IsEnabled = true; // WindowSettings.AllowReloading;
+			ReloadButton.Visibility = Visibility.Visible; // WindowSettings.ShowReloadButton ? Visibility.Visible : Visibility.Collapsed;
+			Toolbar.Visibility = Visibility.Visible; // WindowSettings.ShowToolbar ? Visibility.Visible : Visibility.Collapsed;
+			UrlTextBox.Visibility = Visibility.Visible; // WindowSettings.AllowAddressBar ? Visibility.Visible : Visibility.Hidden;
+			ZoomMenuItem.Visibility = Visibility.Visible; // settings.AllowPageZoom ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void InitializeBounds()
