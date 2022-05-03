@@ -36,7 +36,6 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 		private readonly IText text;
 		private readonly ILogger logger;
 
-		private WindowClosedEventHandler closed;
 		private WindowClosingEventHandler closing;
 		private bool browserControlGetsFocusFromTaskbar = false;
 
