@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -194,7 +195,12 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 
 		public void UpdateZoomLevel(double value)
 		{
-			Dispatcher.Invoke(() => ZoomLevel.Text = $"{value}%");
+			Dispatcher.Invoke(() =>
+			{
+				ZoomLevel.Text = $"{value}%";
+				var zoomButtonHelpText = this.text.Get(TextKey.BrowserWindow_ZoomLevelReset).Replace("%%ZOOM%%", value.ToString("0"));
+				ZoomResetButton.SetValue(System.Windows.Automation.AutomationProperties.HelpTextProperty, zoomButtonHelpText);
+			});
 		}
 
 		private void BrowserWindow_Closing(object sender, CancelEventArgs e)
@@ -294,6 +300,12 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 						}
 					}
 				}
+			}
+
+			if (e.Key == Key.Escape && MenuPopup.IsOpen)
+			{
+				MenuPopup.IsOpen = false;
+				MenuButton.Focus();
 			}
 		}
 
@@ -584,9 +596,13 @@ if (typeof __SEB_focusElement === 'undefined') {
 		private void LoadText()
 		{
 			DeveloperConsoleText.Text = text.Get(TextKey.BrowserWindow_DeveloperConsoleMenuItem);
+			DeveloperConsoleButton.SetValue(System.Windows.Automation.AutomationProperties.HelpTextProperty, text.Get(TextKey.BrowserWindow_DeveloperConsoleMenuItem));
 			FindCaseSensitiveCheckBox.Content = text.Get(TextKey.BrowserWindow_FindCaseSensitive);
 			FindMenuText.Text = text.Get(TextKey.BrowserWindow_FindMenuItem);
+			FindMenuButton.SetValue(System.Windows.Automation.AutomationProperties.HelpTextProperty, text.Get(TextKey.BrowserWindow_FindMenuItem));
 			ZoomText.Text = text.Get(TextKey.BrowserWindow_ZoomMenuItem);
+			ZoomInButton.SetValue(System.Windows.Automation.AutomationProperties.HelpTextProperty, text.Get(TextKey.BrowserWindow_ZoomMenuPlus));
+			ZoomOutButton.SetValue(System.Windows.Automation.AutomationProperties.HelpTextProperty, text.Get(TextKey.BrowserWindow_ZoomMenuMinus));
 			ReloadButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_ReloadButton));
 			BackwardButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_BackwardButton));
 			ForwardButton.SetValue(System.Windows.Automation.AutomationProperties.NameProperty, text.Get(TextKey.BrowserWindow_ForwardButton));
